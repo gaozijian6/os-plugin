@@ -1,43 +1,9 @@
-import keyboard
-import subprocess
-import time
-import win32gui
-import win32con
+from PIL import Image
 
-# 定义全局变量以存储浏览器窗口的句柄
-browser_hwnd = None
+# 打开当前目录下的 cry.png 文件
+img = Image.open("cry.png")
 
-# 遍历所有窗口，查找谷歌浏览器的窗口
-def find_browser_window():
-    global browser_hwnd
-    def enum_window_callback(hwnd, _):
-        window_text = win32gui.GetWindowText(hwnd)
-        if "Google Chrome" in window_text:
-            print(f"找到窗口: {window_text}, 句柄: {hwnd}")
-            global browser_hwnd
-            browser_hwnd = hwnd
-            return False  # 找到窗口后停止遍历
-        return True  # 继续遍历其他窗口
+# 将图片保存为 ICO 格式
+img.save("cry.ico", format="ICO")
 
-    win32gui.EnumWindows(enum_window_callback, None)
-
-def open_browser():
-    global browser_hwnd
-    # 打开谷歌浏览器
-    subprocess.Popen(['start', 'chrome'], shell=True)
-    time.sleep(1)
-    find_browser_window()
-
-def minimize_browser():
-    global browser_hwnd
-    if browser_hwnd is not None:
-        win32gui.ShowWindow(browser_hwnd, win32con.SW_MINIMIZE)
-    else:
-        print("未找到谷歌浏览器窗口")
-
-# 设置快捷键
-keyboard.add_hotkey('alt+c', open_browser)
-keyboard.add_hotkey('alt+m', minimize_browser)
-
-print("按下 alt+c 打开浏览器，按下 alt+m 缩小浏览器窗口")
-keyboard.wait('esc')  # 按下 Esc 键退出程序
+print("转换完成，已保存为 cry.ico")

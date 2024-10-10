@@ -1,11 +1,16 @@
 import win32gui
 import win32com.client
 import win32con
+import io
+import sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def find_window_by_name(name):
     def callback(handle, data):
         if win32gui.GetWindowText(handle) == name:
             data.append(handle)
+            return False
         return True
     result = []
     win32gui.EnumWindows(callback, result)
