@@ -61,8 +61,6 @@ def create_tray_icon():
         sys.exit()
 
     menu = Menu(
-        MenuItem('打开浏览器', open_browser),
-        MenuItem('最小化浏览器', minimize_browser),
         MenuItem('退出', on_quit)
     )
 
@@ -89,8 +87,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("程序正在退出...")
         sys.exit(0)
-
-# Additional code block to print Python environment information
-# print(sys.executable)
-# print(sys.version)
-# print(sys.path)
